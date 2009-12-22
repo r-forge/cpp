@@ -13,7 +13,7 @@ from the header files of this package
   A data frame with the following 5 variables.
   \describe{
     \item{\code{declaration}}{the full line of the C routine declaration}
-    \item{\code{classes}}{The C++ class}
+    \item{\code{class}}{The C++ class}
     \item{\code{nargs}}{the number of arguments of the routine, including the object}
     \item{\code{method}}{The name of the method}
     \item{\code{args}}{Each element is a character vector giving the type of argument the routine is expecting. }
@@ -31,7 +31,10 @@ from the header files of this package
 	# no need to call data since we use lazy loading
 	head( reflection )
 	
+	# constructors
+	subset( reflection, method == "new" )
 	
-	
+	# methods of the vector<int> class
+	subset( reflection, class == "vector<int>" )
 }
 \keyword{datasets}

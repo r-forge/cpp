@@ -3,9 +3,11 @@
 headers <- list.files( "src", pattern = "[.]h$", full.names = TRUE )
 invisible( file.copy( headers, "inst/include", overwrite = TRUE ) )
 
-lines <- unlist( lapply( headers, function( file ){
-	gsub( "^.*RcppExport\\s+SEXP\\s+", "", grep( "RcppExport.*?SEXP.*___", readLines( file ), value = TRUE, perl = TRUE ), perl = TRUE )
+declarations <- unlist( lapply( headers, function( file ){
+	grep( "RcppExport.*?SEXP.*___", readLines( file ), value = TRUE, perl = TRUE )
 } ) )
+
+lines <- gsub( "^.*RcppExport\\s+SEXP\\s+", "", declarations, perl = TRUE )
 
 rx <- "^(.*?)___(?!_)(.*)$"
 classes <- sub( rx, "\\1", lines, perl = TRUE )
@@ -25,8 +27,8 @@ args <- sapply( parts, function(x){
 })
 
 reflection <- data.frame( 
-	declaration = lines, 
-	classes = classes, 
+	declaration = declarations, 
+	class = classes, 
 	nargs = nargs, 
 	method = method, 
 	args = structure(args, dim = length(lines) ), 
