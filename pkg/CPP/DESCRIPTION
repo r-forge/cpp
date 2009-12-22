@@ -9,5 +9,6 @@ Description: The package defines a simple mechanism to expose
 	C++ classes as R (S4) classes
 License: GPL (>=2)
 LazyLoad: yes
+LazyData: yes
 Depends: Rcpp, methods
 

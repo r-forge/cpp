@@ -5,6 +5,7 @@ importFrom( methods, new )
 exportMethods( new, "$", "as.vector" )
 
 export( CPP )
+
 exportClasses( "C++Object", "C++Class",
 
 	# vectors
