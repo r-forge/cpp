@@ -1,0 +1,13 @@
+Package: CPP
+Type: Package
+Title: C++ objects in R
+Version: 0.0-0 
+Date: 2009-12-21
+Author: Romain Francois
+Maintainer: Romain Francois <francoisromain@free.fr>
+Description: The package defines a simple mechanism to expose 
+	C++ classes as R (S4) classes
+License: GPL (>=2)
+LazyLoad: yes
+Depends: Rcpp, methods
+

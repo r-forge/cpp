@@ -1,0 +1,17 @@
+useDynLib(CPP)
+
+importFrom( methods, new )
+
+exportMethods( new, "$", "as.vector" )
+
+export( CPP )
+exportClasses( "C++Object", "C++Class",
+
+	# vectors
+	"vector<>", "vector<int>", "vector<double>", "vector<raw>", 
+	
+	# sets
+	"set<>", "set<int>"
+	
+	) 
+
