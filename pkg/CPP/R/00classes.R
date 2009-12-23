@@ -102,6 +102,9 @@ setGeneric( "length" )
 
 # completion
 .completion_maker <- function(cppclass = "vector<int>"){
+	# maybe we could cache the reflection data in this scope
+	# but it is not that expensive to compute, and this 
+	# is just used for completion, so performance is not the issue
 	function(x, pattern = "" ){
 		# be on the safe side
 		if( ! is( x, "C++Object" ) ){
@@ -123,4 +126,7 @@ setGeneric( "length" )
 ".DollarNames.set<int>"       <- .completion_maker( "set<int>" )
 ".DollarNames.set<double>"    <- .completion_maker( "set<double>" )
 ".DollarNames.set<raw>"       <- .completion_maker( "set<raw>" )
+".DollarNames.deque<int>"     <- .completion_maker( "deque<int>" )
+".DollarNames.deque<double>"  <- .completion_maker( "deque<double>" )
+".DollarNames.deque<raw>"     <- .completion_maker( "deque<raw>" )
 

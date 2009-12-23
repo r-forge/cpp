@@ -12,7 +12,10 @@ exportClasses( "C++Object", "C++Class",
 	"vector<>", "vector<int>", "vector<double>", "vector<raw>", 
 	
 	# sets
-	"set<>", "set<int>"
+	"set<>", "set<int>", "set<double>", "set<raw>", 
+	
+	# deques
+	"deque<>", "deque<int>", "deque<double>", "deque<raw>"
 	
 	) 
 

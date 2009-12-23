@@ -4,6 +4,7 @@
 \alias{vector<>-class}
 \alias{as.vector,vector<>-method}
 \alias{[[,vector<>-method}
+\alias{length,vector<>-method}
 \alias{as.list,vector<>-method}
 
 \title{Class "vector<>" - virtual class, super class of std vector objects}
@@ -29,5 +30,25 @@ Class \code{"\linkS4class{C++Object}"}, directly.
 \seealso{
 	Implementations classes: \linkS4class{vector<int>}, 
 	\linkS4class{vector<double>}, \linkS4class{vector<raw>}
+}
+\examples{
+	x <- new( CPP( "vector<int>") )
+	x$assign( 1:20 )
+	x$size()
+	x$push_back( 21:40 )
+	\dontshow{	stopifnot( identical( as.vector( x ), 1:40 ) )}
+	
+	x <- new( CPP( "vector<double>") )
+	x$assign( 1:20 )
+	x$size() 
+	x$push_back( 21:40 )
+	\dontshow{	stopifnot( identical( as.vector( x ), as.numeric(1:40) ) )}
+	
+	x <- new( CPP( "vector<raw>") )
+	x$assign( 1:20 )
+	x$size() 
+	x$push_back( 21:40 )
+	\dontshow{	stopifnot( identical( as.vector( x ), as.raw(1:40) ) )}
+	
 }
 \keyword{classes}

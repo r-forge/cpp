@@ -28,9 +28,7 @@ namespace CPP{
 		x_ptr< std::vector<<%= ctype_c %>> > p(x) ;
 		int n = LENGTH(p1) ;
 		int* start = INTEGER(p1);
-		if( p->size() + n < p->capacity() ){
-			p->insert( p->end(), start, start + n) ;
-		}
+		p->insert( p->end(), start, start + n) ;
 		return(R_NilValue) ;
 	}
 	
@@ -38,9 +36,7 @@ namespace CPP{
 		x_ptr< std::vector<<%= ctype_c %>> > p(x) ;
 		int n = LENGTH(p1) ;
 		double* start = REAL(p1);
-		if( p->size() + n < p->capacity() ){
-			p->insert( p->end(), start, start + n) ;
-		}
+		p->insert( p->end(), start, start + n) ;
 		return(R_NilValue) ;
 	}
 	
@@ -48,9 +44,7 @@ namespace CPP{
 		x_ptr< std::vector<<%= ctype_c %>> > p(x) ;
 		int n = LENGTH(p1) ;
 		Rbyte* start = RAW(p1);
-		if( p->size() + n < p->capacity() ){
-			p->insert( p->end(), start, start + n) ;
-		}
+		p->insert( p->end(), start, start + n) ;
 		return(R_NilValue) ;
 	}
 	
