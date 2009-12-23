@@ -2,7 +2,7 @@ useDynLib(CPP)
 
 importFrom( methods, new )
 
-exportMethods( new, "$", "as.vector" )
+exportMethods( new, "$", "as.vector", "as.list" )
 
 export( CPP )
 
@@ -15,4 +15,15 @@ exportClasses( "C++Object", "C++Class",
 	"set<>", "set<int>"
 	
 	) 
+
+# completion
+importFrom( utils, .DollarNames )
+
+S3method( .DollarNames, "vector<int>" )
+S3method( .DollarNames, "vector<double>" )
+S3method( .DollarNames, "vector<raw>" )
+
+S3method( .DollarNames, "set<int>" )
+S3method( .DollarNames, "set<double>" )
+S3method( .DollarNames, "set<raw>" )
 

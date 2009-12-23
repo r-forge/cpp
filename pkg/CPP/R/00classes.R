@@ -100,3 +100,27 @@ setGeneric( "as.vector" )
 setGeneric( "as.list" )
 setGeneric( "length" )
 
+# completion
+.completion_maker <- function(cppclass = "vector<int>"){
+	function(x, pattern = "" ){
+		# be on the safe side
+		if( ! is( x, "C++Object" ) ){
+			return( character(0) )
+		}
+		# look in the reflection data
+		data <- reflection[ reflection[["class"]] == cppclass & reflection[["nargs"]] > 0 , ]
+		if( !nrow( data) ) return(character(0))
+		
+		completions <- unique( 
+			sprintf( "%s(%s", data[["method"]], ifelse(data[["nargs"]] == 1L, ")", "" ) ) )
+		grep( pattern, completions, value = TRUE )
+	}
+}
+
+".DollarNames.vector<int>"    <- .completion_maker( "vector<int>" )
+".DollarNames.vector<double>" <- .completion_maker( "vector<double>" )
+".DollarNames.vector<raw>"    <- .completion_maker( "vector<raw>" )
+".DollarNames.set<int>"       <- .completion_maker( "set<int>" )
+".DollarNames.set<double>"    <- .completion_maker( "set<double>" )
+".DollarNames.set<raw>"       <- .completion_maker( "set<raw>" )
+
