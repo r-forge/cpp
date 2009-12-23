@@ -1,0 +1,7 @@
+
+to build the package : 
+
+$ R CMD build CPP
+# R CMD INSTALL CPP_0.0-0.tar.gz
+
+

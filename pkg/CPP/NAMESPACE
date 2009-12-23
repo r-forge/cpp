@@ -30,3 +30,7 @@ S3method( .DollarNames, "set<int>" )
 S3method( .DollarNames, "set<double>" )
 S3method( .DollarNames, "set<raw>" )
 
+S3method( .DollarNames, "deque<int>" )
+S3method( .DollarNames, "deque<double>" )
+S3method( .DollarNames, "deque<raw>" )
+
