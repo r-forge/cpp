@@ -13,8 +13,11 @@ brew(
 # generate header filers and cpp files for vector<{int,double,raw}>
 vector_header <- file.path( "inst", "brew", "src", "vector.h" )
 vector_cpp    <- file.path( "inst", "brew", "src", "vector.cpp" )
+vector_man    <- file.path( "inst", "brew", "man", "vector.Rd" )
+
 set_header    <- file.path( "inst", "brew", "src", "set.h" )
 set_cpp       <- file.path( "inst", "brew", "src", "set.cpp" )
+set_man       <- file.path( "inst", "brew", "man", "set.Rd" )
 
 variables <- list( 
 	ctype_r        = c( "int", "double", "raw" ),
@@ -29,10 +32,13 @@ for( i in 1:3L){
 	}
 	brew( vector_header, output = file.path( "src", sprintf( "vector_%s_.h"   , ctype_r ) ) )
 	brew( vector_cpp   , output = file.path( "src", sprintf( "vector_%s_.cpp" , ctype_r ) ) )
+	brew( vector_man   , output = file.path( "man", sprintf( "vector_%s_.Rd"  , ctype_r ) ) )
 	
 	brew( set_header, output = file.path( "src", sprintf( "set_%s_.h"   , ctype_r ) ) )
 	brew( set_cpp   , output = file.path( "src", sprintf( "set_%s_.cpp" , ctype_r ) ) )
+	brew( set_man   , output = file.path( "man", sprintf( "set_%s_.Rd" , ctype_r ) ) )
 }
+
 
 # now parse the headers to make the reflection data
 
