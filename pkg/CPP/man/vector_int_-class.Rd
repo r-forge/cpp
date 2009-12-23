@@ -21,26 +21,9 @@ Class \code{"\linkS4class{C++Object}"}, by class "vector<>", distance 2.
 }
 \section{Methods}{
 	\describe{
-		\item{as.vector}{\code{signature(x = "vector<int>")}: converts this to an R integer vector}
+		\item{as.vector}{\code{signature(x = "vector<int>")}: converts this to an R vector}
 	}
 }
 \author{ Romain Francois <francoisromain@free.fr> }
-\examples{
-
-x <- new( CPP("vector<int>") )
-x$push_back( 1L )
-x$size()
-x$push_back(1:10)
-x$size()
-x$capacity()
-x$reserve( 50L )
-x$capacity()
-x$max_size()
-x$as.vector()
-as.vector(x)
-
-# this uses 0-based indexing
-x[[0L]]
-
-}
+\seealso{\linkS4class{vector<>} for examples}
 \keyword{classes}

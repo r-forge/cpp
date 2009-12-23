@@ -27,6 +27,6 @@ Class \code{"\linkS4class{C++Object}"}, directly.
 \references{ The \code{std::set} C++ template from the standard template library.  }
 \author{ Romain Francois <francoisromain@free.fr> }
 \seealso{
-	\linkS4class{set<int>}
+	\linkS4class{set<int>}, \linkS4class{set<raw>}, \linkS4class{set<double>}
 }
 \keyword{classes}
