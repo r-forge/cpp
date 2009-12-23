@@ -1,5 +1,30 @@
 #!/bin/env Rscript
 
+if( !require( "brew" ) ){
+	stop( "The brew package is required to build this package" )
+}
+
+# generate header filers and cpp files for vector<{int,double,raw}>
+header <- file.path( "inst", "brew", "src", "vector.h" )
+cpp    <- file.path( "inst", "brew", "src", "vector.cpp" )
+
+variables <- list( 
+	ctype_r        = c( "int", "double", "raw" ),
+	ctype_c        = c( "int", "double", "Rbyte" ),
+	scalar_builder = c( "Rf_ScalarInteger", "Rf_ScalarReal", "Rf_ScalarRaw"), 
+	SXP            = c( "INTSXP", "REALSXP", "RAWSXP"),
+	MACRO          = c( "INTEGER", "REAL", "RAW" )
+)
+for( i in 1:3L){
+	for( v in names(variables) ){
+		assign( v, variables[[v]][i], globalenv() )
+	}
+	brew( header, output = file.path( "src", sprintf( "vector_%s_.h"   , ctype_r ) ) )
+	brew( cpp   , output = file.path( "src", sprintf( "vector_%s_.cpp" , ctype_r ) ) )
+}
+
+# now parse the headers to make the reflection data
+
 headers <- list.files( "src", pattern = "[.]h$", full.names = TRUE )
 invisible( file.copy( headers, "inst/include", overwrite = TRUE ) )
 

@@ -97,5 +97,6 @@ setMethod( "$", "C++Object", function(x, name ){
 } )
 
 setGeneric( "as.vector" )
+setGeneric( "as.list" )
 setGeneric( "length" )
 

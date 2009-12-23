@@ -4,7 +4,7 @@
 \alias{vector<>-class}
 \alias{as.vector,vector<>-method}
 \alias{[[,vector<>-method}
-\alias{length,vector<>-method}
+\alias{as.list,vector<>-method}
 
 \title{Class "vector<>" - virtual class, super class of std vector objects}
 \description{Super class of all \code{std::vector} objects}
@@ -20,6 +20,7 @@ Class \code{"\linkS4class{C++Object}"}, directly.
 \section{Methods}{
 \describe{
 	\item{as.vector}{\code{signature(x = "vector<>")}: returns the \code{std::vector} as an R vector of the appropriate type }
+	\item{as.list}{\code{signature(x = "vector<>")}: same as \code{as.vector} }
 	\item{length}{\code{signature(x = "vector<>")}: the number of elements in the \code{std::vector} }
 	\item{[[}{\code{signature(x = "vector<>")}: extracts one element from the \code{std::vector} as an R vector of length 1 }
 }
