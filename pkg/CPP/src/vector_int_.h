@@ -13,6 +13,8 @@ namespace CPP{
 	
 	// methods
 	RcppExport SEXP vector_int____push_back___integer(SEXP, SEXP) ;
+	RcppExport SEXP vector_int____push_back___double(SEXP, SEXP) ;
+	RcppExport SEXP vector_int____push_back___raw(SEXP, SEXP) ;
 	RcppExport SEXP vector_int____size(SEXP);
 	RcppExport SEXP vector_int____capacity(SEXP);
 	RcppExport SEXP vector_int____max_size(SEXP);

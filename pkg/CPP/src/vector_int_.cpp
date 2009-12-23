@@ -19,8 +19,30 @@ namespace CPP{
 	
 	SEXP vector_int____push_back___integer(SEXP x, SEXP p1){
 		x_ptr< std::vector<int> > p(x) ;
-		for( int i=0; i<LENGTH(p1); i++){
-			p->push_back( INTEGER(p1)[i] ) ;
+		int n = LENGTH(p1) ;
+		int* start = INTEGER(p1);
+		if( p->size() + n < p->capacity() ){
+			p->insert( p->end(), start, start + n) ;
+		}
+		return(R_NilValue) ;
+	}
+	
+	SEXP vector_int____push_back___double(SEXP x, SEXP p1){
+		x_ptr< std::vector<int> > p(x) ;
+		int n = LENGTH(p1) ;
+		double* start = REAL(p1);
+		if( p->size() + n < p->capacity() ){
+			p->insert( p->end(), start, start + n) ;
+		}
+		return(R_NilValue) ;
+	}
+	
+	SEXP vector_int____push_back___raw(SEXP x, SEXP p1){
+		x_ptr< std::vector<int> > p(x) ;
+		int n = LENGTH(p1) ;
+		Rbyte* start = RAW(p1);
+		if( p->size() + n < p->capacity() ){
+			p->insert( p->end(), start, start + n) ;
 		}
 		return(R_NilValue) ;
 	}
