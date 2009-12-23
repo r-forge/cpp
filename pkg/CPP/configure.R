@@ -4,9 +4,17 @@ if( !require( "brew" ) ){
 	stop( "The brew package is required to build this package" )
 }
 
+# generate the Makevars
+brew( 
+	file.path( "inst", "brew", "src", "Makevars" ), 
+	file.path( "src", "Makevars" )
+)
+
 # generate header filers and cpp files for vector<{int,double,raw}>
-header <- file.path( "inst", "brew", "src", "vector.h" )
-cpp    <- file.path( "inst", "brew", "src", "vector.cpp" )
+vector_header <- file.path( "inst", "brew", "src", "vector.h" )
+vector_cpp    <- file.path( "inst", "brew", "src", "vector.cpp" )
+set_header    <- file.path( "inst", "brew", "src", "set.h" )
+set_cpp       <- file.path( "inst", "brew", "src", "set.cpp" )
 
 variables <- list( 
 	ctype_r        = c( "int", "double", "raw" ),
@@ -19,8 +27,11 @@ for( i in 1:3L){
 	for( v in names(variables) ){
 		assign( v, variables[[v]][i], globalenv() )
 	}
-	brew( header, output = file.path( "src", sprintf( "vector_%s_.h"   , ctype_r ) ) )
-	brew( cpp   , output = file.path( "src", sprintf( "vector_%s_.cpp" , ctype_r ) ) )
+	brew( vector_header, output = file.path( "src", sprintf( "vector_%s_.h"   , ctype_r ) ) )
+	brew( vector_cpp   , output = file.path( "src", sprintf( "vector_%s_.cpp" , ctype_r ) ) )
+	
+	brew( set_header, output = file.path( "src", sprintf( "set_%s_.h"   , ctype_r ) ) )
+	brew( set_cpp   , output = file.path( "src", sprintf( "set_%s_.cpp" , ctype_r ) ) )
 }
 
 # now parse the headers to make the reflection data

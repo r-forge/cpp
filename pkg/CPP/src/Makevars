@@ -1,3 +1,0 @@
-PKG_CXXFLAGS=`Rscript -e 'Rcpp:::CxxFlags()'` -I.
-PKG_LIBS=`Rscript -e 'Rcpp:::LdFlags()'`
-
