@@ -31,17 +31,9 @@ setAs( "vector<raw>", "integer", function(from) as.integer( from$as.vector() ) )
 setAs( "vector<raw>", "numeric", function(from) as.numeric( from$as.vector() ) )
 setAs( "vector<raw>", "raw", function(from) from$as.vector() )
 
-._as_stdvector_builder <- function(dest = "double"){
-	cppclass <- CPP( sprintf( "vector<%s>", dest ) )
-	function(from){
-		x <- new( cppclass )
-		x$push_back( from )
-		x
-	}
-}
-._as_stdvector_raw <- ._as_stdvector_builder( "raw")
-._as_stdvector_double <- ._as_stdvector_builder( "double")
-._as_stdvector_int <- ._as_stdvector_builder( "int")
+._as_vector_raw <- ._as_std_builder( "vector", "raw")
+._as_vector_double <- ._as_std_builder( "vector", "double")
+._as_vector_int <- ._as_std_builder( "vector", "int")
 
 setAs( "integer", "vector<raw>"   , ._as_stdvector_raw )
 setAs( "numeric", "vector<raw>"   , ._as_stdvector_raw )

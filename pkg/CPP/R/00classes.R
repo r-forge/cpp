@@ -130,3 +130,42 @@ setGeneric( "length" )
 ".DollarNames.deque<double>"  <- .completion_maker( "deque<double>" )
 ".DollarNames.deque<raw>"     <- .completion_maker( "deque<raw>" )
 
+._as_std_builder <- function(stdclass = "vector", dest = "double"){
+	cppclass <- CPP( sprintf( "%s<%s>", stdclass, dest ) )
+	function(from){
+		x <- new( cppclass )
+		x$assign( from )
+		x
+	}
+}
+NAMESPACE <- environment()
+local({
+	stdclasses <- c("vector", "deque", "set" )
+	ctypes <- c("int", "double", "raw" )
+	rtypes <- c("integer", "double", "raw" )
+	for( stdclass in stdclasses ){
+		baseclass <- sprintf( "%s<>", stdclass)
+		setClass( baseclass , contains = c( "C++Object", "VIRTUAL" ) )
+		setMethod( "as.vector", baseclass, function(x, mode = "any") x$as.vector() )
+		setMethod( "as.list", baseclass, function(x, mode = "any") x$as.vector() ) )
+		setMethod( "length", baseclass , function(x) x$size() )
+		setMethod( "[[", baseclass, function(x, i, j, ..., exact = TRUE){
+			x$get( as.integer( i ) )
+		} )
+
+		for( ctype in ctypes){
+			specific_class <- sprintf( "%s<%s>", stdclass, ctype )
+			setClass( specific_class, contains = baseclass )
+			
+			for( rtype in rtypes){
+				converter <- function() {
+					conv <- get( sprintf( "as.%s", rtype ), baseenv() )
+					function(from) conv( from$as.vector() )
+				}
+				setAs( specific_class, rtype, converter() )
+				setAs( rtype, specific_class, ._as_std_builder(stdclass, rtype) )
+			}
+		}
+	}
+})
+

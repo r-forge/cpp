@@ -31,17 +31,9 @@ setAs( "deque<raw>", "integer", function(from) as.integer( from$as.vector() ) )
 setAs( "deque<raw>", "numeric", function(from) as.numeric( from$as.vector() ) )
 setAs( "deque<raw>", "raw", function(from) from$as.vector() )
 
-._as_deque_builder <- function(dest = "double"){
-	cppclass <- CPP( sprintf( "deque<%s>", dest ) )
-	function(from){
-		x <- new( cppclass )
-		x$push_back( from )
-		x
-	}
-}
-._as_deque_raw <- ._as_deque_builder( "raw")
-._as_deque_double <- ._as_deque_builder( "double")
-._as_deque_int <- ._as_deque_builder( "int")
+._as_deque_raw <- ._as_std_builder( "deque", "raw")
+._as_deque_double <- ._as_std_builder( "deque", "double")
+._as_deque_int <- ._as_std_builder( "deque", "int")
 
 setAs( "integer", "deque<raw>"   , ._as_deque_raw )
 setAs( "numeric", "deque<raw>"   , ._as_deque_raw )
