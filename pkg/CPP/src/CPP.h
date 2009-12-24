@@ -35,11 +35,6 @@ T* x_ptr<T>::operator->() const {
 	return pointer ;
 }
 
-RcppExport SEXP bar(SEXP) ;
-
-// does not work
-// RcppExport SEXP foo(x_ptr< std::vector<int> > ) ;
-
 } // namespace CPP
 
 #endif

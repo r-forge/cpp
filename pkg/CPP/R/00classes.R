@@ -101,7 +101,9 @@ setGeneric( "as.list" )
 setGeneric( "length" )
 
 # completion
-.completion_maker <- function(cppclass = "vector<int>"){
+.completion_maker <- function(stdclass = "vector", ctype = "int"){
+	
+	cppclass <- sprintf( "%s<%s>", stdclass, ctype )
 	# maybe we could cache the reflection data in this scope
 	# but it is not that expensive to compute, and this 
 	# is just used for completion, so performance is not the issue
@@ -120,16 +122,6 @@ setGeneric( "length" )
 	}
 }
 
-".DollarNames.vector<int>"    <- .completion_maker( "vector<int>" )
-".DollarNames.vector<double>" <- .completion_maker( "vector<double>" )
-".DollarNames.vector<raw>"    <- .completion_maker( "vector<raw>" )
-".DollarNames.set<int>"       <- .completion_maker( "set<int>" )
-".DollarNames.set<double>"    <- .completion_maker( "set<double>" )
-".DollarNames.set<raw>"       <- .completion_maker( "set<raw>" )
-".DollarNames.deque<int>"     <- .completion_maker( "deque<int>" )
-".DollarNames.deque<double>"  <- .completion_maker( "deque<double>" )
-".DollarNames.deque<raw>"     <- .completion_maker( "deque<raw>" )
-
 ._as_std_builder <- function(stdclass = "vector", dest = "double"){
 	cppclass <- CPP( sprintf( "%s<%s>", stdclass, dest ) )
 	function(from){
@@ -142,12 +134,12 @@ NAMESPACE <- environment()
 local({
 	stdclasses <- c("vector", "deque", "set" )
 	ctypes <- c("int", "double", "raw" )
-	rtypes <- c("integer", "double", "raw" )
+	rtypes <- c("integer", "numeric", "raw" )
 	for( stdclass in stdclasses ){
 		baseclass <- sprintf( "%s<>", stdclass)
 		setClass( baseclass , contains = c( "C++Object", "VIRTUAL" ) )
 		setMethod( "as.vector", baseclass, function(x, mode = "any") x$as.vector() )
-		setMethod( "as.list", baseclass, function(x, mode = "any") x$as.vector() ) )
+		setMethod( "as.list", baseclass, function(x, mode = "any") x$as.vector() )
 		setMethod( "length", baseclass , function(x) x$size() )
 		setMethod( "[[", baseclass, function(x, i, j, ..., exact = TRUE){
 			x$get( as.integer( i ) )
@@ -157,13 +149,18 @@ local({
 			specific_class <- sprintf( "%s<%s>", stdclass, ctype )
 			setClass( specific_class, contains = baseclass )
 			
+			assign( 
+				sprintf( ".DollarNames.%s<%s>", stdclass, ctype ), 
+				.completion_maker( stdclass, ctype ), 
+				envir = NAMESPACE )
+			
 			for( rtype in rtypes){
 				converter <- function() {
 					conv <- get( sprintf( "as.%s", rtype ), baseenv() )
 					function(from) conv( from$as.vector() )
 				}
 				setAs( specific_class, rtype, converter() )
-				setAs( rtype, specific_class, ._as_std_builder(stdclass, rtype) )
+				setAs( rtype, specific_class, ._as_std_builder(stdclass, ctype) )
 			}
 		}
 	}
