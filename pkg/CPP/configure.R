@@ -65,6 +65,7 @@ rx <- "^(.*?)___(?!_)(.*)$"
 classes <- sub( rx, "\\1", lines, perl = TRUE )
 classes <- sub( "vector_(.*)_", "vector<\\1>", classes )
 classes <- sub( "set_(.*)_", "set<\\1>", classes )
+classes <- sub( "deque_(.*)_", "deque<\\1>", classes )
 
 right <- sub( rx, "\\2", lines, perl = TRUE )
 nargs <- sapply( strsplit( sub( "^.*[(](.*)[)].*", "\\1", right ), "," ), length )
