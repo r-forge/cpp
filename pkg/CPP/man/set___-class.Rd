@@ -46,6 +46,12 @@ Class \code{"\linkS4class{C++Object}"}, directly.
 	x$insert( c( sample( 1:20 ), sample(1:20) ) )
 	x$size()
 	\dontshow{	stopifnot( identical( as.vector( x ), as.raw(1:20) ) )}
-		
+	
+	x <- new( CPP( "set<string>") )
+	x$insert( sample( letters ) )
+	x$size()
+	\dontshow{	stopifnot( identical( as.vector( x ), letters ) )}
+	
+	
 }
 \keyword{classes}

@@ -52,6 +52,12 @@ Class \code{"\linkS4class{C++Object}"}, directly.
 	x$push_front( 1:20 )
 	x$size()
 	\dontshow{	stopifnot( identical( as.vector( x ), as.raw(1:60) ) )}
-
+	
+	x <- new( CPP( "deque<string>") )
+	x$assign( letters )
+	x$push_front( LETTERS )
+	x$size()
+	\dontshow{	stopifnot( identical( as.vector( x ), c(LETTERS,letters) ) )}
+	
 }
 \keyword{classes}

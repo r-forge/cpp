@@ -50,5 +50,11 @@ Class \code{"\linkS4class{C++Object}"}, directly.
 	x$push_back( 21:40 )
 	\dontshow{	stopifnot( identical( as.vector( x ), as.raw(1:40) ) )}
 	
+	x <- new( CPP( "vector<string>") )
+	x$assign( letters )
+	x$push_back( LETTERS )
+	as.vector( x )
+	\dontshow{	stopifnot( identical( as.vector( x ), c( letters, LETTERS) ) )}
+	
 }
 \keyword{classes}

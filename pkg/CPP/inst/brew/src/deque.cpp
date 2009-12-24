@@ -60,10 +60,24 @@ namespace CPP{
 		p->resize( (int)REAL(p1)[0], 0 ) ;
 		return R_NilValue ;
 	}
+
+	SEXP deque_<%= ctype_r %>____pop_back(SEXP x){
+		x_ptr< std::deque<<%= ctype_c %>> > p(x) ;
+		p->pop_back() ;
+		return(R_NilValue) ;
+	}
+	
+	SEXP deque_<%= ctype_r %>____pop_front(SEXP x){
+		x_ptr< std::deque<<%= ctype_c %>> > p(x) ;
+		p->pop_front() ;
+		return(R_NilValue) ;
+	}
+	
+<% if( ctype_r %in% c("int","double","raw") ) { %>
+	
 	
 	SEXP deque_<%= ctype_r %>____get___integer(SEXP x, SEXP p1){
 		x_ptr< std::deque<<%= ctype_c %>> > p(x) ;
-		std::deque<<%= ctype_c %>>& vec = *p ;
 		return( <%= scalar_builder %>( p->at( INTEGER(p1)[0] ) ) ) ;
 	}
 	
@@ -134,18 +148,6 @@ namespace CPP{
 		return(R_NilValue) ;
 	}
 	
-	SEXP deque_<%= ctype_r %>____pop_back(SEXP x){
-		x_ptr< std::deque<<%= ctype_c %>> > p(x) ;
-		p->pop_back() ;
-		return(R_NilValue) ;
-	}
-	
-	SEXP deque_<%= ctype_r %>____pop_front(SEXP x){
-		x_ptr< std::deque<<%= ctype_c %>> > p(x) ;
-		p->pop_front() ;
-		return(R_NilValue) ;
-	}
-	
 	SEXP deque_<%= ctype_r %>____back(SEXP x){
 		x_ptr< std::deque<<%= ctype_c %>> > p(x) ;
 		return( Rf_ScalarInteger( p->back() ) ) ;
@@ -163,6 +165,75 @@ namespace CPP{
 		UNPROTECT( 1 ) ; /* res */
 		return res ;
 	}
+	
+
+<% } else if( ctype_r == "string" ) { %>
+
+	SEXP deque_string____get___character(SEXP x, SEXP p1){
+		x_ptr< std::deque<std::string> > p(x) ;
+		return( Rf_mkString( p->at( INTEGER(p1)[0] ).c_str() ) ) ;
+	}
+	
+	SEXP deque_string____assign___character( SEXP x, SEXP p1){
+		x_ptr< std::deque<std::string> > p(x) ;
+		int n = LENGTH(p1) ;
+		p->clear() ;
+		for( int i=0; i<n; i++){
+			p->push_back( std::string( CHAR( STRING_ELT(p1, i) ) ) ) ;
+		}
+		return R_NilValue ;
+	}
+	
+	SEXP deque_string____push_back___character(SEXP x, SEXP p1){
+		x_ptr< std::deque<std::string> > p(x) ;
+		int n = LENGTH(p1) ;
+		int newsize = n + p->size() ;
+		for( int i=0; i<n; i++){
+			p->push_back( std::string(CHAR(STRING_ELT(p1,i))) ) ;
+		}
+		return(R_NilValue) ;
+	}
+	
+	SEXP deque_string____push_front___character(SEXP x, SEXP p1){
+		x_ptr< std::deque<std::string> > p(x) ;
+		int n = LENGTH(p1) ;
+		int newsize = n + p->size() ;
+		for( int i=0; i<n; i++){
+			p->push_front( std::string(CHAR(STRING_ELT(p1,(n-i-1)))) ) ;
+		}
+		return(R_NilValue) ;
+	}
+
+	SEXP deque_string____back(SEXP x){
+		x_ptr< std::deque<std::string> > p(x) ;
+		return( Rf_mkString( p->back().c_str() ) ) ;
+	}
+	
+	SEXP deque_string____front(SEXP x){
+		x_ptr< std::deque<std::string> > p(x) ;
+		return( Rf_mkString( p->front().c_str() ) ) ;
+	}
+	
+	SEXP deque_string____as_dot_vector(SEXP x){
+		x_ptr< std::deque<std::string> > p(x) ;
+		SEXP res = PROTECT(Rf_allocVector( STRSXP, p->size() ));
+		std::deque<std::string>::iterator it ;
+		int i=0;
+		it=p->begin(); 
+		while( it != p->end() ){
+			SET_STRING_ELT( res, i, Rf_mkChar(it->c_str()) ) ;
+			++i  ;
+			++it ;
+		}
+		UNPROTECT( 1 ) ; /* res */
+		return res ;
+	}
+		
+	
+	
+<% } %>
+	
+	
 	
 	
 }

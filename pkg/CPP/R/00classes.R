@@ -124,10 +124,18 @@ setGeneric( "length" )
 
 ._as_std_builder <- function(stdclass = "vector", dest = "double"){
 	cppclass <- CPP( sprintf( "%s<%s>", stdclass, dest ) )
-	function(from){
-		x <- new( cppclass )
-		x$assign( from )
-		x
+	if( identical( stdclass, "set" ) ){
+		function(from){
+			x <- new( cppclass )
+			x$insert( from )
+			x
+		}
+	} else{
+		function(from){
+			x <- new( cppclass )
+			x$assign( from )
+			x
+		}
 	}
 }
 NAMESPACE <- environment()
@@ -164,5 +172,21 @@ local({
 			}
 		}
 	}
+})
+
+# generate string containers
+local({
+	stdclasses <- c("vector", "set", "deque" )
+	
+	for( stdclass in stdclasses ){
+		container <- sprintf( "%s<string>", stdclass )
+		
+		setClass( container, contains = "vector<>" ) 
+		assign( sprintf( ".DollarNames.%s<string>", stdclass), 
+			.completion_maker( container, "string" ), 
+			envir = NAMESPACE )
+		setAs("character", container, ._as_std_builder( stdclass, "string" ) )
+		setAs( container, "character", function(from) from$as.vector() )
+    }
 })
 

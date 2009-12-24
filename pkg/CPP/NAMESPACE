@@ -9,13 +9,13 @@ export( CPP )
 exportClasses( "C++Object", "C++Class",
 
 	# vectors
-	"vector<>", "vector<int>", "vector<double>", "vector<raw>", 
+	"vector<>", "vector<int>", "vector<double>", "vector<raw>", "vector<string>", 
 	
 	# sets
-	"set<>", "set<int>", "set<double>", "set<raw>", 
+	"set<>", "set<int>", "set<double>", "set<raw>", "set<string>", 
 	
 	# deques
-	"deque<>", "deque<int>", "deque<double>", "deque<raw>"
+	"deque<>", "deque<int>", "deque<double>", "deque<raw>", "deque<string>"
 	
 	) 
 

@@ -24,20 +24,20 @@ deque_cpp       <- file.path( "inst", "brew", "src", "deque.cpp" )
 deque_man       <- file.path( "inst", "brew", "man", "deque.Rd" )
 
 variables <- list( 
-	ctype_r        = c( "int", "double", "raw" ),
-	ctype_c        = c( "int", "double", "Rbyte" ),
-	scalar_builder = c( "Rf_ScalarInteger", "Rf_ScalarReal", "Rf_ScalarRaw"), 
-	SXP            = c( "INTSXP", "REALSXP", "RAWSXP"),
-	MACRO          = c( "INTEGER", "REAL", "RAW" )
+	ctype_r        = c( "int", "double", "raw", "string" ),
+	ctype_c        = c( "int", "double", "Rbyte", "std::string" ),
+	scalar_builder = c( "Rf_ScalarInteger", "Rf_ScalarReal", "Rf_ScalarRaw", "Rf_mkString"), 
+	SXP            = c( "INTSXP", "REALSXP", "RAWSXP", "STRSXP"),
+	MACRO          = c( "INTEGER", "REAL", "RAW", "" )
 )
-for( i in 1:3L){
+for( i in 1:4L){
 	for( v in names(variables) ){
 		assign( v, variables[[v]][i], globalenv() )
 	}
 	brew( vector_header, output = file.path( "src", sprintf( "vector_%s_.h"   , ctype_r ) ) )
 	brew( vector_cpp   , output = file.path( "src", sprintf( "vector_%s_.cpp" , ctype_r ) ) )
 	brew( vector_man   , output = file.path( "man", sprintf( "vector_%s_.Rd"  , ctype_r ) ) )
-	
+	file.copy( file.path( "src", sprintf( "vector_%s_.cpp" , ctype_r ) ), "/tmp", overwrite = TRUE )
 	brew( set_header, output = file.path( "src", sprintf( "set_%s_.h"   , ctype_r ) ) )
 	brew( set_cpp   , output = file.path( "src", sprintf( "set_%s_.cpp" , ctype_r ) ) )
 	brew( set_man   , output = file.path( "man", sprintf( "set_%s_.Rd" , ctype_r ) ) )
@@ -46,7 +46,6 @@ for( i in 1:3L){
 	brew( deque_cpp   , output = file.path( "src", sprintf( "deque_%s_.cpp" , ctype_r ) ) )
 	brew( deque_man   , output = file.path( "man", sprintf( "deque_%s_.Rd" , ctype_r ) ) )
 }
-
 
 # now parse the headers to make the reflection data
 
