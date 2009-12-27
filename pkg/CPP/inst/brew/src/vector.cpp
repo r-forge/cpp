@@ -18,6 +18,7 @@ namespace CPP{
 	
 	SEXP vector_<%= ctype_r %>____new(){
 		std::vector<<%= ctype_c %>>* p = new std::vector<<%= ctype_c %>> ;
+		Rprintf( "std::vector<int>*  : <<%='%'%>p>\n", p ) ;
 		SEXP ptr = PROTECT(R_MakeExternalPtr( (void*)p , R_NilValue, R_NilValue));
 		R_RegisterCFinalizerEx( ptr, vector_<%= ctype_r %>____finalizer , FALSE ) ;
 		UNPROTECT(1) ; /* ptr */
