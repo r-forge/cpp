@@ -27,22 +27,22 @@ namespace CPP{
 	}
 	
 	SEXP set_<%= ctype_r %>____size(SEXP x){
-		x_ptr< std::set<<%= ctype_c %>> > p(x) ;
+		Rcpp::XPtr< std::set<<%= ctype_c %>> > p(x) ;
 		return Rf_ScalarInteger( p->size() ) ;
 	}
 	
 	SEXP set_<%= ctype_r %>____max_size(SEXP x){
-		x_ptr< std::set<<%= ctype_c %>> > p(x) ;
+		Rcpp::XPtr< std::set<<%= ctype_c %>> > p(x) ;
 		return Rf_ScalarInteger( p->max_size() ) ;
 	}
 	
 	SEXP set_<%= ctype_r %>____empty(SEXP x){
-		x_ptr< std::set<<%= ctype_c %>> > p(x) ;
+		Rcpp::XPtr< std::set<<%= ctype_c %>> > p(x) ;
 		return( Rf_ScalarLogical( p->empty() ) ) ;
 	}
 	
 	SEXP set_<%= ctype_r %>____clear(SEXP x){
-		x_ptr< std::set<<%= ctype_c %>> > p(x) ;
+		Rcpp::XPtr< std::set<<%= ctype_c %>> > p(x) ;
 		p->clear() ;
 		return R_NilValue ;
 	}
@@ -51,7 +51,7 @@ namespace CPP{
 <% if( ctype_r %in% c("int","double","raw") ) { %>
 	
 	SEXP set_<%= ctype_r %>____insert___integer(SEXP x, SEXP p1){
-		x_ptr< std::set<<%= ctype_c %>> > p(x) ;
+		Rcpp::XPtr< std::set<<%= ctype_c %>> > p(x) ;
 		int n = LENGTH(p1); 
 		int *start = INTEGER(p1) ;
 		p->insert( start, start+n ) ;
@@ -59,7 +59,7 @@ namespace CPP{
 	}
 	
 	SEXP set_<%= ctype_r %>____insert___double(SEXP x, SEXP p1){
-		x_ptr< std::set<<%= ctype_c %>> > p(x) ;
+		Rcpp::XPtr< std::set<<%= ctype_c %>> > p(x) ;
 		int n = LENGTH(p1); 
 		double *start = REAL(p1) ;
 		p->insert( start, start+n ) ;
@@ -67,7 +67,7 @@ namespace CPP{
 	}
 	
 	SEXP set_<%= ctype_r %>____insert___raw(SEXP x, SEXP p1){
-		x_ptr< std::set<<%= ctype_c %>> > p(x) ;
+		Rcpp::XPtr< std::set<<%= ctype_c %>> > p(x) ;
 		int n = LENGTH(p1); 
 		Rbyte *start = RAW(p1) ;
 		p->insert( start, start+n ) ;
@@ -75,7 +75,7 @@ namespace CPP{
 	}
 	
 	SEXP set_<%= ctype_r %>____get___integer(SEXP x, SEXP p1){
-		x_ptr< std::set<<%= ctype_c %>> > p(x) ;
+		Rcpp::XPtr< std::set<<%= ctype_c %>> > p(x) ;
 		int index = INTEGER(p1)[0] ;
 		if( index > p->size() ){
 			Rf_error( "out of bounds" ) ; 
@@ -88,7 +88,7 @@ namespace CPP{
 	}
 	
 	SEXP set_<%= ctype_r %>____as_dot_vector(SEXP x){
-		x_ptr< std::set<<%= ctype_c %>> > p(x) ;
+		Rcpp::XPtr< std::set<<%= ctype_c %>> > p(x) ;
 		SEXP res = PROTECT(Rf_allocVector( <%= SXP %>, p->size() ));
 		copy( p->begin(), p->end(), <%= MACRO %>(res) ) ;
 		UNPROTECT( 1 ) ; /* res */
@@ -102,7 +102,7 @@ namespace CPP{
 <%# ============== strings ===============%>
 
 	SEXP set_string____insert___character(SEXP x, SEXP p1){
-		x_ptr< std::set<std::string> > p(x) ;
+		Rcpp::XPtr< std::set<std::string> > p(x) ;
 		int n = LENGTH(p1); 
 		for( int i=0; i<n; i++){
 			p->insert( std::string( CHAR(STRING_ELT(p1,i) ) ) ) ;
@@ -111,7 +111,7 @@ namespace CPP{
 	}
 		
 	SEXP set_string____get___integer(SEXP x, SEXP p1){
-		x_ptr< std::set<std::string> > p(x) ;
+		Rcpp::XPtr< std::set<std::string> > p(x) ;
 		int index = INTEGER(p1)[0] ;
 		if( index > p->size() ){
 			Rf_error( "out of bounds" ) ; 
@@ -124,7 +124,7 @@ namespace CPP{
 	}
 	
 	SEXP set_string____as_dot_vector(SEXP x){
-		x_ptr< std::set<std::string> > p(x) ;
+		Rcpp::XPtr< std::set<std::string> > p(x) ;
 		int n = p->size() ;
 		SEXP res = PROTECT(Rf_allocVector( STRSXP, n ));
 		std::set<std::string>::iterator it = p->begin() ;
