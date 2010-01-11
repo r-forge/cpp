@@ -2,7 +2,7 @@ Package: CPP
 Type: Package
 Title: C++ objects in R
 Version: 0.0-1
-Date: 2009-12-29
+Date: 2010-01-10
 Author: Romain Francois
 Maintainer: Romain Francois <francoisromain@free.fr>
 Description: The package defines a simple mechanism to expose 
@@ -10,5 +10,5 @@ Description: The package defines a simple mechanism to expose
 License: GPL (>=2)
 LazyLoad: yes
 LazyData: yes
-Depends: Rcpp (>= 0.7.0.5), methods
+Depends: R (>= 2.10.0), Rcpp (>= 0.7.1), methods
 

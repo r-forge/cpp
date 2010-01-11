@@ -187,7 +187,6 @@ namespace CPP{
 	SEXP deque_string____push_back___character(SEXP x, SEXP p1){
 		Rcpp::XPtr< std::deque<std::string> > p(x) ;
 		int n = LENGTH(p1) ;
-		int newsize = n + p->size() ;
 		for( int i=0; i<n; i++){
 			p->push_back( std::string(CHAR(STRING_ELT(p1,i))) ) ;
 		}
@@ -197,7 +196,6 @@ namespace CPP{
 	SEXP deque_string____push_front___character(SEXP x, SEXP p1){
 		Rcpp::XPtr< std::deque<std::string> > p(x) ;
 		int n = LENGTH(p1) ;
-		int newsize = n + p->size() ;
 		for( int i=0; i<n; i++){
 			p->push_front( std::string(CHAR(STRING_ELT(p1,(n-i-1)))) ) ;
 		}

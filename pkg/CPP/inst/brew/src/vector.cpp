@@ -156,12 +156,12 @@ namespace CPP{
 	
 	SEXP vector_string____assign___character( SEXP x, SEXP p1){
 		Rcpp::XPtr< std::vector<std::string> > p(x) ;
-		int n = LENGTH(p1);
+		size_t n = LENGTH(p1);
 		p->clear() ;
 		if( p->capacity() < n ){
 			p->reserve(n) ;
 		}
-		for( int i=0; i<n; i++){
+		for( size_t i=0; i<n; i++){
 			p->push_back( std::string( CHAR( STRING_ELT(p1, i) ) ) ) ;
 		}
 		return R_NilValue ;
@@ -169,12 +169,12 @@ namespace CPP{
 	
 	SEXP vector_string____push_back___character(SEXP x, SEXP p1){
 		Rcpp::XPtr< std::vector<std::string> > p(x) ;
-		int n = LENGTH(p1) ;
-		int newsize = n + p->size() ;
+		size_t n = LENGTH(p1) ;
+		size_t newsize = n + p->size() ;
 		if( p->capacity() < newsize ){
 			p->reserve( newsize ) ;
 		}
-		for( int i=0; i<n; i++){
+		for( size_t i=0; i<n; i++){
 			p->push_back( std::string(CHAR(STRING_ELT(p1,i))) ) ;
 		}
 		return(R_NilValue) ;
@@ -182,9 +182,9 @@ namespace CPP{
 	
 	SEXP vector_string____as_dot_vector(SEXP x){
 		Rcpp::XPtr< std::vector<std::string> > p(x) ;
-		int n = p->size() ;
+		size_t n = p->size() ;
 		SEXP res = PROTECT(Rf_allocVector(STRSXP, n));
-		for( int i=0; i<n; i++){
+		for( size_t i=0; i<n; i++){
 			SET_STRING_ELT( res, i, Rf_mkChar( p->at(i).c_str() ) ) ;
 		}
 		UNPROTECT( 1 ) ; /* res */

@@ -76,13 +76,13 @@ namespace CPP{
 	
 	SEXP set_<%= ctype_r %>____get___integer(SEXP x, SEXP p1){
 		Rcpp::XPtr< std::set<<%= ctype_c %>> > p(x) ;
-		int index = INTEGER(p1)[0] ;
+		size_t index = INTEGER(p1)[0] ;
 		if( index > p->size() ){
 			Rf_error( "out of bounds" ) ; 
 		}
 		
 		std::set<<%= ctype_c %>>::iterator it ;
-		int i=0; 
+		size_t i=0; 
 		for( it=p->begin(); i<index; i++, it++) ;
 		return( <%= scalar_builder %>( *it ) );
 	}
@@ -112,13 +112,13 @@ namespace CPP{
 		
 	SEXP set_string____get___integer(SEXP x, SEXP p1){
 		Rcpp::XPtr< std::set<std::string> > p(x) ;
-		int index = INTEGER(p1)[0] ;
+		size_t index = INTEGER(p1)[0] ;
 		if( index > p->size() ){
 			Rf_error( "out of bounds" ) ; 
 		}
 		
 		std::set<std::string>::iterator it ;
-		int i=0; 
+		size_t i=0; 
 		for( it=p->begin(); i<index; i++, it++) ;
 		return( Rf_mkString( it->c_str() ) );
 	}
