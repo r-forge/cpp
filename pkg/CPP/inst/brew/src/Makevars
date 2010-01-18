@@ -1,10 +1,4 @@
-PKG_LIBS=<% Rcpp:::LdFlags() %>
-PKG_CXXFLAGS=<% Rcpp:::CxxFlags() %>
+PKG_LIBS += <% Rcpp:::LdFlags() %>
+PKG_CXXFLAGS += <% Rcpp:::CxxFlags() %>
+CXXOPTS += <% Rcpp:::Cxx0xFlags() %>
 
-all: 	$(SHLIB) hack
-
-# the hack target works fine when R CMD INSTALL 
-# but it bombs at R CMD check so that check cannot 
-# warn about PKG_CXXFLAGS
-hack:
-	mkdir tmp ; cp $(SHLIB) tmp ; rm -fr tmp

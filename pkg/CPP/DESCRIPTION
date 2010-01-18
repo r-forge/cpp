@@ -10,5 +10,5 @@ Description: The package defines a simple mechanism to expose
 License: GPL (>=2)
 LazyLoad: yes
 LazyData: yes
-Depends: R (>= 2.10.0), Rcpp (>= 0.7.1), methods
+Depends: R (>= 2.10.0), Rcpp (>= 0.7.2.2), methods
 
