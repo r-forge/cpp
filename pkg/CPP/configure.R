@@ -4,12 +4,6 @@ if( !require( "brew" ) ){
 	stop( "The brew package is required to build this package" )
 }
 
-# generate the Makevars
-brew( 
-	file.path( "inst", "brew", "src", "Makevars" ), 
-	file.path( "src", "Makevars" )
-)
-
 # generate header filers and cpp files for vector<{int,double,raw}>
 vector_header <- file.path( "inst", "brew", "src", "vector.h" )
 vector_cpp    <- file.path( "inst", "brew", "src", "vector.cpp" )
