@@ -12,8 +12,8 @@ C++ classes as R (S4 classes)
 \tabular{ll}{
 Package: \tab CPP\cr
 Type: \tab Package\cr
-Version: \tab 0.0-0\cr
-Date: \tab 2009-12-21\cr
+Version: \tab 0.0-1\cr
+Date: \tab 2010-01-22\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
